@@ -14,7 +14,7 @@ def credentials():
 def browser():
     """Launch browser once per session"""
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         yield browser
         browser.close()  # Playwright stops automatically here
 
