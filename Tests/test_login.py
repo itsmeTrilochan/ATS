@@ -24,8 +24,8 @@ class TestLogin:
         self.page.get_by_role("button", name="Sign in").click()
 
         # Assertions for dashboard
-        # expect(self.page.get_by_role("button", name="Collapse sidebar")).to_be_visible()
-        # expect(self.page.locator("//button[@class='p-2 text-gray-600 rounded-md hover:bg-gray-100']//*[name()='svg']")).to_be_visible()
+        expect(self.page.get_by_role("button", name="Collapse sidebar")).to_be_visible()
+        
         expect(self.page.get_by_role("button", name="User Management")).to_be_visible()
         expect(self.page.get_by_role("button", name="A admin_omega admin@omega.com")).to_be_visible()
         expect(self.page.get_by_text("Service List")).to_be_visible()
