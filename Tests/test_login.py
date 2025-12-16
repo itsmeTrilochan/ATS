@@ -1,47 +1,5 @@
-# import pytest
-# from playwright.sync_api import Page, expect
 
-# class TestLogin:
-#     BASE_URL = "http://192.168.101.143:3000/sign-in"
-#     VALID_EMAIL = "admin@omega.com"
-#     VALID_PASSWORD = "omega@123"
-
-#     @pytest.fixture(autouse=True)
-#     def setup(self, page: Page):
-#         # Navigate to login page
-#         page.goto(self.BASE_URL)
-#         self.page = page
-
-#     def test_login_page_elements(self):
-#         # Check login page elements
-#         expect(self.page.get_by_role("heading", name="Welcome to Omega ERP")).to_be_visible()
-#         expect(self.page.get_by_text("Sign in to access your").nth(1)).to_be_visible()
-
-#     def test_successful_login(self):
-#         # Fill login form
-#         self.page.get_by_role("textbox", name="Email address").fill(self.VALID_EMAIL)
-#         self.page.get_by_role("textbox", name="Password").fill(self.VALID_PASSWORD)
-#         self.page.get_by_role("checkbox", name="Remember me").check()
-#         self.page.get_by_role("button", name="Sign in").click()
-
-#         # Assert dashboard is visible
-#         expect(self.page.get_by_role("button", name="Collapse sidebar")).to_be_visible()
-#         expect(self.page.get_by_role("button", name="User Management")).to_be_visible()
-#         expect(self.page.get_by_role("button", name="A admin_omega admin@omega.com")).to_be_visible()
-#         expect(self.page.get_by_text("Service List")).to_be_visible()
-
-#     def test_invalid_login(self):
-#         # Fill login form with invalid credentials
-#         self.page.get_by_role("textbox", name="Email address").fill("wrong@user.com")
-#         self.page.get_by_role("textbox", name="Password").fill("wrongpass")
-#         self.page.get_by_role("button", name="Sign in").click()
-
-#         # Assert error message is visible
-#         expect(self.page.get_by_text("User not found")).to_be_visible()
-#         # Ensure user is still on login page
-#         expect(self.page).to_have_url(self.BASE_URL)
-
-
+import re 
 import pytest
 from playwright.sync_api import Page, expect
 
