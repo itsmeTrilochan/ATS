@@ -5,7 +5,7 @@ from playwright.sync_api import sync_playwright, Page
 def credentials():
     """Provide login credentials and base URL"""
     return {
-        "base_url": "http://192.168.101.143:3000/sign-in",
+        "base_url": "http://69.62.123.60:3004/sign-in",
         "email": "admin@omega.com",
         "password": "omega@123"
     }

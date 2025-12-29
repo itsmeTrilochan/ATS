@@ -1,6 +1,7 @@
 import pytest
 from playwright.sync_api import expect
 from faker import Faker
+from pathlib import Path
 
 fake = Faker()
 
@@ -12,30 +13,16 @@ class TestLogin:
     def setup(self, page):
         self.page = page
 
-    # ---------------- LOGIN TEST ----------------
-
-    def test_login(self, credentials):
-        self.page.goto(credentials["base_url"])
-
-        self.page.get_by_role("textbox", name="Email address").fill(credentials["email"])
-        self.page.get_by_role("textbox", name="Password").fill(credentials["password"])
-        self.page.get_by_role("checkbox", name="Remember me").check()
-        self.page.get_by_role("button", name="Sign in").click()
-
-        # ✅ Assertion
-        expect(self.page.get_by_role("button", name="User Management")).to_be_visible()
-
     # ---------------- CREATE USER TEST ----------------
-
     def test_create_user(self, login_page):
-        self.page = login_page  # already logged in
+        page = login_page  # already logged in
 
         # Navigate to User Management
-        self.page.get_by_role("button", name="User Management").click()
-        expect(self.page.get_by_role("heading", name="User Management")).to_be_visible()
+        page.get_by_role("button", name="User Management").click()
+        expect(page.get_by_role("heading", name="User Management")).to_be_visible()
 
-        self.page.get_by_role("link", name="Users").click()
-        self.page.get_by_role("link", name="Create").click()
+        page.get_by_role("link", name="Users").click()
+        page.get_by_role("link", name="Create").click()
 
         # -------- Faker Data --------
         username = fake.name()
@@ -50,21 +37,36 @@ class TestLogin:
         )
 
         # Fill form
-        self.page.get_by_role("textbox", name="Username").fill(username)
-        self.page.get_by_role("textbox", name="Email").fill(email)
-        self.page.get_by_role("textbox", name="Phone").fill(phone)
-        self.page.get_by_role("textbox", name="Password").fill(password)
+        page.get_by_role("textbox", name="Username").fill(username)
+        page.get_by_role("textbox", name="Email").fill(email)
+        page.get_by_role("textbox", name="Phone").fill(phone)
+        page.get_by_role("textbox", name="Password").fill(password)
 
-        # Upload image ✅
-        self.page.locator("input[type='file']").set_input_files("download.png")
+        # Upload image
+        # file_path = Path("tests/assets/download.png")
+        # # page.locator("input[type='file']").set_input_files(file_path)
+        # page.locator("input[type='file']").set_input_files(str(file_path))
+        
+        # file_path = Path("C:\Users\Omega\Desktop\test images\download.png")
+        file_path = Path("C:\\Users\\Omega\\Desktop\\test images\\download.png")
+
+      
+
+        page.locator("input[type='file']").set_input_files(str(file_path))
+
 
         # Select roles
-        self.page.get_by_label("Roles").select_option([
-            "8b46dbf6-a589-49f9-9885-26ec5256c866",
-            "4065dd81-5405-4a26-9321-9e543d318161"
-        ])
+        page.select_option(
+        "#roleIds",
+        [
+        "019b4552-0010-7b88-8881-bd5c76fb34e4"
+       ]
+)
+        expect(page.get_by_text("Image uploaded successfully")).to_be_visible()
 
-        # Submit form ✅
-        self.page.get_by_role("button", name="Save").click()
 
-        # ✅ Ass
+        # Submit form
+        page.get_by_role("button", name="Create User").click()
+
+        # Final assertion
+        expect(page.get_by_text("User created")).to_be_visible()

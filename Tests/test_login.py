@@ -20,7 +20,7 @@ class TestLogin:
         self.page.get_by_role("button", name="Sign in").click()
 
         # expect(self.page.get_by_role("button", name="Collapse sidebar")).to_be_visible()
-        # expect(self.page.get_by_role("button", name="User Management")).to_be_visible()
+        expect(self.page.get_by_role("button", name="User Management")).to_be_visible()
         expect(self.page.get_by_role("button", name=f"A admin_omega {credentials['email']}")).to_be_visible()
         expect(self.page.get_by_text("Service List")).to_be_visible()
 
